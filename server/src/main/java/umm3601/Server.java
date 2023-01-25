@@ -45,7 +45,13 @@ public class Server {
 
     // List users, filtered using query parameters
     server.get("/api/users", userController::getUsers);
+
+    // list to dos,
+
+    server.get("/api/todos", TodoController::getTodos);
   }
+
+
 
   /***
    * Create a database using the json file, use it as data source for a new
