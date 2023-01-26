@@ -1,4 +1,5 @@
-package umm3601.user;
+package umm3601.todo;
+
 
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
@@ -7,9 +8,9 @@ import io.javalin.http.NotFoundResponse;
 /**
  * Controller that manages requests for info about users.
  */
-public class UserController {
+public class TodoController {
 
-  private UserDatabase database;
+  private TodoDatabase database;
 
   /**
    * Construct a controller for users.
@@ -40,7 +41,21 @@ public class UserController {
     }
   }
 
-
+    /**
+   * Get the single user specified by the `id` parameter in the request.
+   *
+   * @param ctx a Javalin HTTP context
+   */
+  public void getTodos(Context ctx) {
+    String id = ctx.pathParam("id");
+    User user = database.getTodos(id);
+    if (user != null) {
+      ctx.json(user);
+      ctx.status(HttpStatus.OK);
+    } else {
+      throw new NotFoundResponse("No user with id " + id + " was found.");
+    }
+  }
 
   /**
    * Get a JSON response with a list of all the users in the "database".
@@ -53,3 +68,4 @@ public class UserController {
   }
 
 }
+
