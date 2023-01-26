@@ -21,39 +21,25 @@ public class TodoController {
    *
    * @param database the `Database` containing user data
    */
-  public UserController(UserDatabase database) {
+  public TodoController(TodoDatabase database) {
     this.database = database;
   }
 
-  /**
-   * Get the single user specified by the `id` parameter in the request.
-   *
-   * @param ctx a Javalin HTTP context
-   */
-  public void getUser(Context ctx) {
-    String id = ctx.pathParam("id");
-    User user = database.getUser(id);
-    if (user != null) {
-      ctx.json(user);
-      ctx.status(HttpStatus.OK);
-    } else {
-      throw new NotFoundResponse("No user with id " + id + " was found.");
-    }
-  }
+
 
     /**
-   * Get the single user specified by the `id` parameter in the request.
+   * Get the single todo specified by the `id` parameter in the request.
    *
    * @param ctx a Javalin HTTP context
    */
-  public void getTodos(Context ctx) {
+  public void getTodo(Context ctx) {
     String id = ctx.pathParam("id");
-    User user = database.getTodos(id);
-    if (user != null) {
-      ctx.json(user);
+    Todo todo = database.getTodo(id);
+    if (todo != null) {
+      ctx.json(todo);
       ctx.status(HttpStatus.OK);
     } else {
-      throw new NotFoundResponse("No user with id " + id + " was found.");
+      throw new NotFoundResponse("No todo with id " + id + " was found.");
     }
   }
 
@@ -62,9 +48,9 @@ public class TodoController {
    *
    * @param ctx a Javalin HTTP context
    */
-  public void getUsers(Context ctx) {
-    User[] users = database.listUsers(ctx.queryParamMap());
-    ctx.json(users);
+  public void getTodos(Context ctx) {
+    Todo[] todos = database.listTodos(ctx.queryParamMap());
+    ctx.json(todos);
   }
 
 }
