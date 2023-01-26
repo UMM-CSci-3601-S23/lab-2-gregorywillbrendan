@@ -1,4 +1,5 @@
-package umm3601.user;
+package umm3601.todo;
+
 
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
@@ -7,9 +8,9 @@ import io.javalin.http.NotFoundResponse;
 /**
  * Controller that manages requests for info about users.
  */
-public class UserController {
+public class TodoController {
 
-  private UserDatabase database;
+  private TodoDatabase database;
 
   /**
    * Construct a controller for users.
@@ -20,36 +21,37 @@ public class UserController {
    *
    * @param database the `Database` containing user data
    */
-  public UserController(UserDatabase database) {
+  public TodoController(TodoDatabase database) {
     this.database = database;
   }
 
-  /**
-   * Get the single user specified by the `id` parameter in the request.
+
+
+    /**
+   * Get the single todo specified by the `id` parameter in the request.
    *
    * @param ctx a Javalin HTTP context
    */
-  public void getUser(Context ctx) {
+  public void getTodo(Context ctx) {
     String id = ctx.pathParam("id");
-    User user = database.getUser(id);
-    if (user != null) {
-      ctx.json(user);
+    Todo todo = database.getTodo(id);
+    if (todo != null) {
+      ctx.json(todo);
       ctx.status(HttpStatus.OK);
     } else {
-      throw new NotFoundResponse("No user with id " + id + " was found.");
+      throw new NotFoundResponse("No todo with id " + id + " was found.");
     }
   }
-
-
 
   /**
    * Get a JSON response with a list of all the users in the "database".
    *
    * @param ctx a Javalin HTTP context
    */
-  public void getUsers(Context ctx) {
-    User[] users = database.listUsers(ctx.queryParamMap());
-    ctx.json(users);
+  public void getTodos(Context ctx) {
+    Todo[] todos = database.listTodos(ctx.queryParamMap());
+    ctx.json(todos);
   }
 
 }
+
