@@ -85,6 +85,26 @@ public class TodoControllerSpec {
       assertEquals("Fry", todo.owner);
     }
   }
+  @Test
+  public void canGetTodosWithCategoryHomework() throws IOException {
+    // this tests that filtering by category
+    Map<String, List<String>> queryParams = new HashMap<>();
+    queryParams.put("category", Arrays.asList(new String[] {"homework"}));
+    when(ctx.queryParamMap()).thenReturn(queryParams);
+
+    // Call the method on the mock controller with the added
+    // query param map to limit the result to just todos with
+    // owner "Fry".
+    todoController.getTodos(ctx);
+
+    // Confirm that all the todos passed to `json` have owner "fry".
+    ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
+    verify(ctx).json(argument.capture());
+    for (Todo todo : argument.getValue()) {
+      assertEquals("homework", todo.category);
+    }
+  }
+
 
   @Test
   public void canGetTodosWithGivenCategoryAndOwner() throws IOException {
