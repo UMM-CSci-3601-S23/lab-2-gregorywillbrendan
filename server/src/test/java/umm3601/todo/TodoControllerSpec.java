@@ -239,7 +239,6 @@ public class TodoControllerSpec {
       // both todos left after arbitrary filters have the same body which contains "mollit"
 
       assertTrue(todo.body.contains("mollit"));
-
-
-
-}}}
+    }
+  }
+}
